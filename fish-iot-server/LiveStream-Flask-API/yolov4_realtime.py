@@ -1,21 +1,14 @@
 import numpy as np
-import argparse
 import imutils
 import time
 import cv2
 import os
 from flask import Flask, request, render_template, Response
 from flask_restful import reqparse, abort, Api, Resource
-import cv2
 from PIL import Image
 from io import BytesIO,StringIO
 import base64
-import torch
-import numpy as np
-import websockets
-import asyncio
 import yaml
-import socket
 
 app = Flask(__name__)
 api = Api(app)
@@ -49,7 +42,7 @@ ln = net.getLayerNames()
 ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 fourcc = cv2.VideoWriter_fourcc(*"MJPG")
 print("[INFO] starting video capture...")
-cap = cv2.VideoCapture("http://192.168.43.181:8080/?action=stream")
+cap = cv2.VideoCapture("http://192.168.43.181:8080/?action=stream") # 來自樹莓派  mjpeg-streamer 的網址
 # cap = cv2.VideoCapture(0)
 time.sleep(2.0)
 
