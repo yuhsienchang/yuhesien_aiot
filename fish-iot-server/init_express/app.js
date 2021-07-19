@@ -19,16 +19,16 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 app.set('trust proxy', 1)
-app.use(session({
-  name: 'skey',
-  secret: 'chyingp', // 用來對session id相關的cookie進行簽名
-  // store: new FileStore(), // 本地儲存session（文字檔案，也可以選擇其他store，比如redis的）
-  saveUninitialized: true, // 是否自動儲存未初始化的會話，建議false
-  resave: false, // 是否每次都重新儲存會話，建議false
-  cookie: {
-    maxAge: 3600 * 1000 // 有效期，單位是毫秒（10秒）
-  }
-}))
+// app.use(session({
+//   name: 'skey',
+//   secret: 'chyingp', // 用來對session id相關的cookie進行簽名
+//   // store: new FileStore(), // 本地儲存session（文字檔案，也可以選擇其他store，比如redis的）
+//   saveUninitialized: true, // 是否自動儲存未初始化的會話，建議false
+//   resave: false, // 是否每次都重新儲存會話，建議false
+//   cookie: {
+//     maxAge: 3600 * 1000 // 有效期，單位是毫秒（10秒）
+//   }
+// }))
 
 // SQL setup
 var mongodb = require('./routes/sql/mongodb')
@@ -53,19 +53,19 @@ app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 
 // 登入驗證
-app.use(function (req, res, next) {
-  console.log("------驗證階段------")
-  // console.log(res.locals.test)
-  // console.log(req.session.useremail) // aiot08@gmail.com
-  res.locals.useremail = req.session.useremail;
-  res.locals.tankname = req.session.tankname;
-  if (res.locals.useremail) {
-    console.log(res.locals.tankname)
-    next(); // 驗證成功，進入 app.use('/', indexRouter);
-  } else {
-    res.redirect('/login') // 驗證失敗，回到 login
-  }
-});
+// app.use(function (req, res, next) {
+//   console.log("------驗證階段------")
+//   // console.log(res.locals.test)
+//   // console.log(req.session.useremail) // aiot08@gmail.com
+//   res.locals.useremail = req.session.useremail;
+//   res.locals.tankname = req.session.tankname;
+//   if (res.locals.useremail) {
+//     console.log(res.locals.tankname)
+//     next(); // 驗證成功，進入 app.use('/', indexRouter);
+//   } else {
+//     res.redirect('/login') // 驗證失敗，回到 login
+//   }
+// });
 
 app.use('/', indexRouter);
 app.use('/dashboard', dashboardRouter);
